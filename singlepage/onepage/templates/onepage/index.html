@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Information</title>
+    <script>
+        //When back arrow is clicked, show previous section
+        window.onpopstate = event => {
+            showSection(event.state.section)
+        }
+
+        function showSection(section) {
+            fetch(`/section/${section}`)
+            .then(response => response.text())
+            .then(text => {
+                document.querySelector('#info').innerHTML = text;
+            });
+        }
+
+        document.addEventListener( 'DOMContentLoaded', () => {
+            document.querySelectorAll('button').forEach( button => {
+                button.onclick = () => {
+                    const section = button.dataset.section;
+                    history.pushState({section: section}, "", `section${section}`);
+                    showSection(section);
+                };
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <h1> Please click the button to know about the terms</h1>
+    <button data-section="1">Computer Science</button>
+    <button data-section="2">Data Science</button>
+    <button data-section="3">Machine Learning</button>
+    <br/>
+    <div id="info">
+    </div>
+</body>
+</html>

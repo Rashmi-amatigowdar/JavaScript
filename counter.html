@@ -1,0 +1,37 @@
+<!--The value of the number increases and decreases with the click of buttons-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Counter</title>
+    <style>
+        body{
+            fontsize: 30px;
+            text-align: center;
+            background-color: cornsilk;
+        }
+        #increase, #decrease {
+            font-size: 30px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let count = 0;
+            document.querySelector('#increase').onclick = () => {
+                count++;
+                document.querySelector('h1').innerHTML = count;
+            }
+            document.querySelector('#decrease').onclick = () => {
+                count--;
+                document.querySelector('h1').innerHTML = count;
+            }
+        } );
+    </script>
+</head>
+<body>
+    <h2>Click + to increase the value and - to decrease the value of number</h2>
+    <h1>0</h1>
+    <button id="increase" >+</button>
+    <button id="decrease" >-</button>
+</body>
+</html>

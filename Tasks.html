@@ -1,0 +1,55 @@
+<!--After submitting the task, the list of tasks will be showed. Cannot submit empty task-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+    <style>
+        body{
+            font-size: 25px;
+            background-color: mistyrose;
+        }
+        #task, #submit{
+            font-size: 25px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const submit = document.querySelector('#submit');
+            const task = document.querySelector('#task');
+
+            submit.disabled = true;
+
+            task.onkeyup = () => {
+                if (task.value.length > 0) {
+                    submit.disabled = false;
+                }
+                else {
+                    submit.disabled = true;
+                }}
+
+            document.querySelector('form').onsubmit = () => {
+
+                const li = document.createElement('li');
+                li.innerHTML = task.value;
+                document.querySelector('#tasks').append(li);
+
+                task.value = '';
+                submit.disabled = true;
+
+                return false;
+                }
+                })
+    </script>
+</head>
+<body>
+    <h1>Tasks</h1>
+    <ul id="tasks"></ul>
+    <form>
+        <label for="task">Enter Task: </label>
+        <input type="text" id="task" placeholder="Task">
+        <br/><br/>
+        <input type="submit" value="submit" id="submit">
+    </form>
+</body>
+</html>

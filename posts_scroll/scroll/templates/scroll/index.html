@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scroll</title>
+    <style>
+        @keyframes hide{
+            0%{
+                opacity: 1;
+                height: 100%;
+                line-height: 100%;
+                padding: 20px;
+                margin-bottom: 10px;
+            }
+            75%{
+                opacity: 0;
+                height: 100%;
+                line-height: 100%;
+                padding: 20px;
+                margin-bottom: 10px;
+            }
+            100%{
+                opacity: 0;
+                height: 0%;
+                line-height: 0%;
+                padding: 0px;
+                margin-bottom: 0px;
+
+            }
+        }
+
+        .post{
+            color: coral;
+            margin: 20px;
+            padding: 10px;
+            background-color: lightblue;
+
+            animation-name: hide;
+            animation-duration: 3s;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+        }
+        .posts{
+            padding-bottom: 20px;
+        }
+    </style>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', load);
+
+        //Load new posts on scrolling
+        window.onscroll = () => {
+            load();
+        }
+
+        let counter = 1;
+        const quantity = 10;
+
+        //Load the Posts on the page
+        function load(){
+            const start = counter;
+            const end = quantity + start - 1;
+            counter = end + 1;
+
+            fetch(`posts?start=${start}&end=${end}`)
+            .then(response => response.json())
+            .then(data => data.Posts.forEach(Posts => {
+                const post = document.createElement('div');
+                post.className = 'post';
+                post.innerHTML = `${Posts} <button class='hide'>Hide</button>`;
+
+                document.querySelector('.posts').append(post);
+                }))
+        }
+
+        //On click of Hide button on the post, it will be removed from page through animation
+        document.addEventListener('click', event => {
+            const element = event.target;
+            if (element.className === 'hide'){
+                element.parentElement.style.animationPlayState = 'running';
+                element.parentElement.addEventListener('animationend', () => {
+                    element.parentElement.remove();
+                });
+            }
+        });
+
+    </script>
+</head>
+<body>
+    <div class="posts"></div>
+</body>
+</html>
